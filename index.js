@@ -67,6 +67,9 @@ async function showPage(currentPage) {
     currentPage = numPages;
   }
 
+  const start = (currentPage - 1) * numPerPage;
+  const end = Math.min(start + numPerPage, pokemon.length);
+
   $("#pokemon").empty();
   for (
     let i = (currentPage - 1) * numPerPage;
@@ -94,7 +97,9 @@ async function showPage(currentPage) {
 
   if (currentPage > 1) {
     $("#pagination").append(`
-        <button type="button" class="btn btn-primary pageBtn" id="pageprev" pageNum="${currentPage - 1}">Prev</button>
+        <button type="button" class="btn btn-primary pageBtn" id="pageprev" pageNum="${
+          currentPage - 1
+        }">Prev</button>
     `);
   }
   for (let i = startI; i <= endI; i++) {
@@ -108,9 +113,15 @@ async function showPage(currentPage) {
   }
   if (currentPage < numPages) {
     $("#pagination").append(`
-        <button type="button" class="btn btn-primary pageBtn" id="pagenext" pageNum="${currentPage + 1}">Next</button>
+        <button type="button" class="btn btn-primary pageBtn" id="pagenext" pageNum="${
+          currentPage + 1
+        }">Next</button>
     `);
   }
+
+  $("#pokemon-count").html(
+    `<h3>Showing ${end - start} of ${pokemon.length} pokemons</h3>`
+  );
 }
 
 $(document).ready(setup);
