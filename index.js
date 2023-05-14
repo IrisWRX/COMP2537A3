@@ -5,7 +5,6 @@ var numPages = 0;
 const numPageBtn = 5;
 
 const setup = async () => {
-  // $("#pokeCards").empty();
   let response = await axios.get(
     "https://pokeapi.co/api/v2/pokemon?offset=0&limit=810"
   );
@@ -92,10 +91,25 @@ async function showPage(currentPage) {
   $("#pagination").empty();
   var startI = Math.max(1, currentPage - Math.floor(numPageBtn / 2));
   var endI = Math.min(numPages, currentPage + Math.floor(numPageBtn / 2));
-  for (let i = startI; i <= endI; i++) {
+
+  if (currentPage > 1) {
     $("#pagination").append(`
-        <button type="button" class="btn btn-primary pageBtn" id="page${i}" pageNum="${i}">${i}</button>
+        <button type="button" class="btn btn-primary pageBtn" id="pageprev" pageNum="${currentPage - 1}">Prev</button>
+    `);
+  }
+  for (let i = startI; i <= endI; i++) {
+    var active = "";
+    if (i == currentPage) {
+      active = "active";
+    }
+    $("#pagination").append(`
+        <button type="button" class="btn btn-primary pageBtn ${active}" id="page${i}" pageNum="${i}">${i}</button>
         `);
+  }
+  if (currentPage < numPages) {
+    $("#pagination").append(`
+        <button type="button" class="btn btn-primary pageBtn" id="pagenext" pageNum="${currentPage + 1}">Next</button>
+    `);
   }
 }
 
