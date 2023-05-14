@@ -7,7 +7,7 @@ const setup = async () => {
   pokemons.forEach(async (pokemon) => {
     const res = await axios.get(pokemon.url);
     $("#pokeCards").append(`
-      <div class="pokeCard card"  >
+      <div class="pokeCard card" pokeName="${res.data.name}"  >
         <h3>${res.data.name.toUpperCase()}</h3> 
         <img src="${res.data.sprites.front_default}" alt="${res.data.name}"/>
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#pokeModal">
